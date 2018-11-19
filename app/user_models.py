@@ -27,7 +27,7 @@ class UsersModel():
 
     def user_login(self, username, password):
         query = "SELECT * FROM users WHERE username='{}' AND password='{}'".format(username, password)
-        curr = self.user_db.curso
+        curr = self.user_db.cursor
         curr.execute(query)
 
         data = curr.fetchone()
@@ -46,10 +46,24 @@ class UsersModel():
     def user_logout(self, username):
         query = """UPDATE users SET loggin_status = FALSE where username='{}'""".format(username)
 
-            curr = self.user_db.cursor
-            curr.execute(query)
+        curr = self.user_db.cursor
+        curr.execute(query)
 
-            self.user_db.conn.commit()
-            return True
-    
+        self.user_db.conn.commit()
+        return True
+
+    def fetch_user(self, user_id):
+        query = "SELECT * FROM users WHERE user_id={}".format(user_id)
+
+        curr = self.user_db.cursor
+        curr.execute(query)
+
+        data = curr.fetchone()
+        if data:
+            result = {}
+            for i, key in enumerate(curr.description):
+                result[key[0]] = data[i]
+            return result
+        else:
+            return "unknown"
     
