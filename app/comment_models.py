@@ -1,6 +1,6 @@
 import psycopg2
 from datetime import datetime
-from db_config import DbConnect
+from .db_config import DbConnect
 
 
 class Comments(DbConnect):
@@ -16,7 +16,7 @@ class Comments(DbConnect):
             (self.message,self.author,self.time)
         )
 
-        self.connection.commit()
+        self.conn.commit()
         self.cursor.close()
 
     def edit_comment(self,message,comment_id):
@@ -26,7 +26,7 @@ class Comments(DbConnect):
             (message, comment_id)
         )
 
-        self.connection.commit()
+        self.conn.commit()
         self.cursor.close()
 
     def delete_comment(self, comment_id):
@@ -36,6 +36,6 @@ class Comments(DbConnect):
             (comment_id,)
         )
 
-        self.connection.commit()
+        self.conn.commit()
         self.cursor.close()
 
