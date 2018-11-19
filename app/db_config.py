@@ -31,7 +31,8 @@ def create_queries():
         password VARCHAR (50) NOT NULL,
         role VARCHAR (10),
         created_on TIMESTAMP DEFAULT NOW(),
-        last_login TIMESTAMP
+        last_login TIMESTAMP,
+        login_status BOOL DEFAULT TRUE
         );"""
 
     comments = """
