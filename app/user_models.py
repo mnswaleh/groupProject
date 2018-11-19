@@ -1,15 +1,17 @@
-from datetime import date
+from datetime import datetime
 from .db_config import DbConnect
 
 class UsersModel():
     def __init__(self):
         self.user_db = DbConnect
+        self.today = datetime.now()
 
     def create_user(self, user_data):
+        
         user = {
                 "username": user_data['username'],
                 "password": user_data['password'],
-                "last_login": user_data['password'],
+                "last_login": self.today,
                 "role": user_data['role']
             }
 
@@ -31,7 +33,7 @@ class UsersModel():
         data = curr.fetchone()
 
         if data:
-            query = """UPDATE users SET loggin_status = TRUE where username='{}'""".format(username)
+            query = """UPDATE users SET loggin_status = TRUE ,last_login = '{}' where username='{}'""".format(self.today, username)
 
             curr = self.user_db.cursor
             curr.execute(query)
@@ -41,5 +43,13 @@ class UsersModel():
         else:
             return False
 
+    def user_logout(self, username):
+        query = """UPDATE users SET loggin_status = FALSE where username='{}'""".format(username)
+
+            curr = self.user_db.cursor
+            curr.execute(query)
+
+            self.user_db.conn.commit()
+            return True
     
     
