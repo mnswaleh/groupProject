@@ -1,5 +1,5 @@
 from datetime import datetime
-from .db_config import DbConnect
+from db_config import DbConnect
 
 class UsersModel():
     def __init__(self):
