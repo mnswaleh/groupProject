@@ -43,9 +43,12 @@ def create_queries():
         parent INTEGER,
         created_on TIMESTAMP DEFAULT NOW()
         );"""
+    
+    create_admin ="""INSERT INTO users (username, password, role)
+                VALUES ('admin', 'password', 'admin');"""
 
 
-    return [user_table, comments]
+    return [user_table, comments, create_admin]
 
 #get_connection('postgresql://elmonstro:password@localhost:5432/comments')
 #DbConnect().create_tables('postgresql://elmonstro:password@localhost:5432/comments')
