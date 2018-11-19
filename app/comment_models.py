@@ -32,7 +32,7 @@ class Comments(DbConnect):
     def delete_comment(self, comment_id):
         '''delete a comment'''
         self.cursor.execute(
-            '''DELETE FROM comment WHERE id=%s''',
+            '''DELETE FROM comments WHERE id=%s''',
             (comment_id,)
         )
 
