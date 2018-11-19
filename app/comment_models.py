@@ -1,6 +1,6 @@
 import psycopg2
 from datetime import datetime
-from db_config import DbConnect
+from .db_config import DbConnect
 
 
 class Comments:
