@@ -12,8 +12,8 @@ class Comments(DbConnect):
     def add(self):
         '''add a comment table'''
         self.cursor.execute(
-            '''INSERT INTO comments(message,author,time) VALUES(%s, %s, %s, %s)''',
-            (self.message,self.author,self.author,self.time)
+            '''INSERT INTO comments(message,author,time) VALUES(%s, %s, %s)''',
+            (self.message,self.author,self.time)
         )
 
         self.connection.commit()
