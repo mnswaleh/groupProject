@@ -48,4 +48,4 @@ def create_queries():
     return [user_table, comments]
 
 #get_connection('postgresql://elmonstro:password@localhost:5432/comments')
-DbConnect().create_tables('postgresql://elmonstro:password@localhost:5432/comments')
+#DbConnect().create_tables('postgresql://elmonstro:password@localhost:5432/comments')
