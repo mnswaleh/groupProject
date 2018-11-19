@@ -3,39 +3,60 @@ from datetime import datetime
 from .db_config import DbConnect
 
 
-class Comments(DbConnect):
-    def __init__(self, message = None, author = None):
-        self.message = message
-        self.author = author
-        self.time = str(datetime.now())
+class Comments:
+    def __init__(self):
+        self.db = DbConnect()
     
-    def add(self):
+    def add(self, message, author, parent=0 ):
         '''add a comment table'''
-        self.cursor.execute(
-            '''INSERT INTO comments(message,author,time) VALUES(%s, %s, %s)''',
-            (self.message,self.author,self.time)
+        self.db.cursor.execute(
+            '''INSERT INTO comments(message,author, parent) VALUES('{}',{} ,{} )'''.format(message,author, parent)
         )
 
-        self.conn.commit()
-        self.cursor.close()
+        self.db.conn.commit()
+        self.db.cursor.close()
 
     def edit_comment(self,message,comment_id):
         '''edit a comment'''
-        self.cursor.execute(
+        self.db.cursor.execute(
             '''UPDATE comments SET message=%s WHERE id=%s''',
             (message, comment_id)
         )
 
-        self.conn.commit()
-        self.cursor.close()
+        self.db.conn.commit()
+        self.db.cursor.close()
 
     def delete_comment(self, comment_id):
         '''delete a comment'''
-        self.cursor.execute(
+        self.db.cursor.execute(
             '''DELETE FROM comments WHERE id=%s''',
             (comment_id,)
         )
 
-        self.conn.commit()
-        self.cursor.close()
+        self.db.conn.commit()
+        self.db.cursor.close()
+
+    def get_comments(self):
+        '''fetch all comments'''
+        self.db.cursor.execute(
+            '''SELECT comment_id , message FROM comments'''
+        )
+
+        comments = self.db.cursor.fetchall()
+
+        self.db.conn.commit()
+        self.db.cursor.close()
+        return comments
+
+    def get_user_comments(self, user_id):
+        '''fetch all comments'''
+        self.db.cursor.execute(
+            '''SELECT comment_id , message FROM comments WHERE author = {}'''.format(user_id)
+        )
+
+        comments = self.db.cursor.fetchall()
+
+        self.db.conn.commit()
+        self.db.cursor.close()
+        return comments
 

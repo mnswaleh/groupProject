@@ -16,11 +16,19 @@ class DbConnect:
         except psycopg2.IntegrityError:
             pass
         self.conn.commit()
+    
+    def drop_tables(self):
+        """Delete tables"""
+        query = """DROP TABLE IF EXISTS users, comments CASCADE; """
+        self.cursor.execute(query)
+        self.conn.commit()
 
 def get_connection(url):
     """Creates and return connection"""
     conn = psycopg2.connect(url)
     return conn
+
+
 
 def create_queries():
     """Return queries"""
